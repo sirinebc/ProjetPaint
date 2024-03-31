@@ -40,7 +40,7 @@ public class OS extends JFrame{
 					case 's' : mode = 'S'; break;
 					case 'r' : shapemode = 'R'; break;
 					case 'm' : selected_area=null;mode = 'M';break;
-					case 'c' : shapemode = 'C';
+					case 'c' : shapemode = 'C'; break;
 					case 'u' : if (selected.size()>1) {
 									Union u = new Union();
 									System.out.println(selected);
