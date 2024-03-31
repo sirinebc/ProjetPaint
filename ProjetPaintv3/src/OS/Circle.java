@@ -19,7 +19,9 @@ public class Circle extends Shape{
 		return this.radius;
 	}
 	
-	public void resize(int radius) {
+	public void resize(int x, int y, int radius) {
+		this.x=x;
+		this.y=y;
 		this.radius = radius;
 	}
 	
@@ -38,7 +40,7 @@ public class Circle extends Shape{
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(stroke));
 		g2.setColor(new Color(red,green,blue));
-		g2.drawOval(this.x, this.y, radius, radius);
+		g2.fillOval(this.x, this.y, radius, radius);
 	}
 	
 }

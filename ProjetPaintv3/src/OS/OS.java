@@ -39,7 +39,25 @@ public class OS extends JFrame{
 					case 'a' : mode = 'A'; break;
 					case 's' : mode = 'S'; break;
 					case 'r' : shapemode = 'R'; break;
+					case 'm' : selected_area=null;mode = 'M';break;
 					case 'c' : shapemode = 'C';
+					case 'u' : if (selected.size()>1) {
+									Union u = new Union();
+									System.out.println(selected);
+									for (int i=0;i<selected.size();i++ ) {
+										Shape s = selected.get(i);
+										s.unselect();
+										u.add(s);
+										selected.remove(s);
+										shapes.remove(s);
+										i--;
+									}
+									System.out.println(selected);
+									
+									shapes.add(u);
+									System.out.println(shapes);
+									repaint();
+								}
 				}
 			}
 
@@ -145,16 +163,20 @@ public class OS extends JFrame{
 		
 		this.addMouseMotionListener(new MouseMotionListener() {
 			public void mouseDragged(MouseEvent e) {
-				if (mode == 'S') {
-					/*for (Shape s : shapes ) {
-						if (s.getselected()) {
+				if (mode == 'M') {
+					for (Shape s : shapes ) {
+						if (s.clicked(e.getX(), e.getY(), e.getX()+1, e.getY()+1)) {
 							s.move(e.getX()-startX, e.getY()-startY);
 							startX = e.getX();
 							startY = e.getY();
 						}
-					}*/
+					}
+					repaint();
+				}
+				
+				if (mode == 'S') {
 					if (selected_area != null) {
-						selected_area.resize(e.getX()-startX , e.getY()-startY);
+						dragShape4dir(selected_area,e.getX(),e.getY());
 						for (Shape s : shapes ) {
 							if (s.clicked(selected_area.getX(), selected_area.getY(), selected_area.getX() + selected_area.getWidth(), selected_area.getY() + selected_area.getHeight()))
 									{
@@ -176,10 +198,7 @@ public class OS extends JFrame{
 				}
 				if (mode == 'A') {
 					if (currentshape != null) {
-						switch (shapemode) {
-						case 'R' :  ((Rectangle)currentshape).resize(e.getX()-startX , e.getY()-startY);break;
-						case 'C' : ((Circle)currentshape).resize(e.getX()-startX);break;
-						}
+						dragShape4dir(currentshape,e.getX(),e.getY());
 					}
 					repaint();
 				}
@@ -204,6 +223,20 @@ public class OS extends JFrame{
 			s.paint(g);
 		}
 		if (selected_area!= null) selected_area.paint(g);
+	}
+	
+	public void dragShape4dir(Shape shape, int x, int y) {
+		if (shape instanceof Rectangle) {
+			if (x<startX && y<startY) ((Rectangle)shape).resize(x,y,startX-x , startY-y);
+			else if (x<startX && y>startY) ((Rectangle)shape).resize(x,startY,startX-x , y-startY);
+			else if (x>startX && y<startY) ((Rectangle)shape).resize(startX,y,x-startX , startY-y);
+			else ((Rectangle)shape).resize(startX,startY,x-startX , y-startY);
+		}else {
+			if (x<startX && y<startY) ((Circle)shape).resize(x,startY,startX-x);
+			else if (x<startX && y>startY) ((Circle)shape).resize(x,startY,startX-x); 
+			else if (x>startX && y<startY) ((Circle)shape).resize(startX,startY,startY-y);
+			else ((Circle)shape).resize(startX,startY,x-startX);
+		}
 	}
 	
 	public static void main(String[] args) {

@@ -10,7 +10,36 @@ public class Union extends Shape{
 	private ArrayList<Shape> shapes = new ArrayList<Shape>();
 	
 	public void add(Shape s) {
+		s.changeColor(0,0,255);
 		shapes.add(s);
+	}
+	
+	public void changeColor(int red, int green, int blue) {
+		for (Shape s : shapes ) {
+			s.changeColor(red,green,blue);
+		}
+	}
+	
+	public void select() {
+		for (Shape s : shapes ) {
+			s.select();
+		}
+	}
+	
+	public void unselect() {
+		for (Shape s : shapes ) {
+			s.unselect();
+		}
+	}
+	
+	public void move(int dx, int dy) {
+		for (Shape s : shapes ) {
+			s.move(dx, dy);
+		}
+	}
+	
+	public ArrayList<Shape> getShapes(){
+		return shapes;
 	}
 	
 	public Boolean clicked(int x, int y, int x2, int y2) { 

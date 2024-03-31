@@ -22,7 +22,9 @@ public class Rectangle extends Shape{
 		return this.width;
 	}
 	
-	public void resize(int width, int height) {
+	public void resize(int x, int y, int width, int height) {
+		this.x=x;
+		this.y=y;
 		this.width = width;
 		this.height = height;
 	}
@@ -46,7 +48,7 @@ public class Rectangle extends Shape{
 	
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		float[] dashpattern = {10};
+		float[] dashpattern = {5};
 		g2.setStroke(new BasicStroke(stroke));
 		g2.setColor(new Color(red,green,blue));
 		if (stroketype=='d') {
