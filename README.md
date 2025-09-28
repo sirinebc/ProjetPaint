@@ -1,4 +1,8 @@
-Logiciel de dessin vectoriel en Java
+# Logiciel de dessin vectoriel en Java
+
+Commande : 
+java -jar forms.jar
+
 <br><br>
 ![resize](https://github.com/user-attachments/assets/2301afc5-998c-4086-a171-a7f892c43b1b)
 <br><br>
